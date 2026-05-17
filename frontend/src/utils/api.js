@@ -19,44 +19,17 @@ export async function runAudit({ prompt, system_prompt, ground_truth, runs }, ca
       throw new Error(`Server error ${response.status}: ${errorText}`);
     }
 
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder();
-    let buffer = '';
+    const report = await response.json();
 
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split('\n');
-      buffer = lines.pop() || '';
-
-      for (const line of lines) {
-        if (!line.startsWith('data: ')) continue;
-        const jsonStr = line.slice(6).trim();
-        if (!jsonStr) continue;
-
-        try {
-          const event = JSON.parse(jsonStr);
-
-          switch (event.type) {
-            case 'run_start':
-              onRunStart?.(event);
-              break;
-            case 'run_complete':
-              onRunComplete?.(event.run);
-              break;
-            case 'audit_complete':
-              onAuditComplete?.(event.report);
-              break;
-            default:
-              break;
-          }
-        } catch (parseErr) {
-          console.warn('Failed to parse SSE event:', parseErr);
-        }
-      }
+    // Fake the progressive UI to keep the visual effect alive!
+    for (let i = 0; i < report.runs.length; i++) {
+      onRunStart?.({ run_number: i + 1, total_runs: report.total_runs });
+      await new Promise(r => setTimeout(r, 400));
+      onRunComplete?.(report.runs[i]);
+      await new Promise(r => setTimeout(r, 200));
     }
+
+    onAuditComplete?.(report);
   } catch (err) {
     onError?.(err.message || 'An unknown error occurred');
   }

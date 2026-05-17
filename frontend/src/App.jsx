@@ -32,7 +32,7 @@ export default function App() {
 
       addLog('info', `── AUDIT INITIATED ──────────────────────────────────`);
       addLog('info', `Prompt: "${config.prompt.slice(0, 80)}${config.prompt.length > 80 ? '...' : ''}"`);
-      addLog('info', `Model: claude-sonnet-4-20250514 | Runs: ${config.runs}`);
+      addLog('info', `Model: llama-3.3-70b-versatile | Runs: ${config.runs}`);
       if (config.ground_truth) {
         addLog('info', `Ground truth provided (${config.ground_truth.split(' ').length} words)`);
       }

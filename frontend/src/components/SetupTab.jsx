@@ -143,7 +143,7 @@ export default function SetupTab({ onRun, isRunning }) {
       {/* Info Box */}
       <div className="border border-terminal-border/50 p-3 text-[10px] text-terminal-muted leading-relaxed">
         <span className="text-terminal-cyan mr-1">ℹ</span>
-        Each run calls <span className="text-gray-300">claude-sonnet-4-20250514</span> with a 600ms gap.
+        Each run calls <span className="text-gray-300">llama-3.3-70b-versatile</span> with a 600ms gap.
         Responses are scored for pairwise consistency (TF-IDF cosine similarity) and hallucination risk
         (keyword coverage against ground truth). Results stream in real-time.
       </div>

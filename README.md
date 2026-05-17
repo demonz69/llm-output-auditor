@@ -2,6 +2,7 @@
 
 A developer tool that stress-tests LLM prompts by running them multiple times, then scores the outputs for consistency, hallucination risk against a ground truth, and generates a structured QA report.
 
+> **💡 Live Demo:** You can test the tool on the live demo [here](#) (I have configured it using a free xAI API key so you can try it right away!).
 ## Why it matters for AI QA work
 When building LLM applications, a prompt that works once might fail unpredictably. This tool automates the process of testing prompt reliability by:
 1. **Measuring Consistency**: Uses TF-IDF cosine similarity across multiple runs to ensure the model isn't giving wildly different answers.
@@ -20,7 +21,7 @@ python -m venv venv
 
 pip install -r requirements.txt
 
-# Create .env and add your Anthropic API Key
+# Create .env and add your xAI API Key
 cp .env.example .env
 # Edit .env with your key
 
@@ -48,7 +49,7 @@ The frontend will be available at `http://localhost:5173`.
 
 ## Deployment Targets
 - **Frontend**: Designed for deployment on Vercel. Connect the repository, set the framework to Vite, and set the build command to `npm run build`. Set the `VITE_API_URL` environment variable to your backend URL.
-- **Backend**: Designed for Railway or Render. Use the included `Dockerfile`. Provide the `ANTHROPIC_API_KEY` as an environment variable.
+- **Backend**: Designed for Railway or Render. Use the included `Dockerfile`. Provide the `XAI_API_KEY` as an environment variable.
 
 ---
 *Developed for a full-stack engineering portfolio highlighting agentic UI creation, FastAPI backend integrations, and LLM auditing.*
